@@ -115,14 +115,37 @@ impl GopherSweeper {
 
         let (w, h) = self.config.size();
 
-        if x > 0 { result.push((x - 1, y)); }
-        if y > 0 { result.push((x, y - 1)); }
-        if x + 1 < w { result.push((x + 1, y)); }
-        if y + 1 < h { result.push((x, y + 1)); }
-        if x > 0 && y > 0 { result.push((x - 1, y - 1)); }
-        if x > 0 && y + 1 < h { result.push((x - 1, y + 1)); }
-        if x + 1 < w && y > 0 { result.push((x + 1, y - 1)); }
-        if x + 1 < w && y + 1 < h { result.push((x + 1, y + 1)); }
+        if x > 0 {
+            result.push((x - 1, y));
+        }
+
+        if y > 0 {
+            result.push((x, y - 1));
+        }
+
+        if x + 1 < w {
+            result.push((x + 1, y));
+        }
+
+        if y + 1 < h {
+            result.push((x, y + 1));
+        }
+
+        if x > 0 && y > 0 {
+            result.push((x - 1, y - 1));
+        }
+
+        if x > 0 && y + 1 < h {
+            result.push((x - 1, y + 1));
+        }
+
+        if x + 1 < w && y > 0 {
+            result.push((x + 1, y - 1));
+        }
+
+        if x + 1 < w && y + 1 < h {
+            result.push((x + 1, y + 1));
+        }
 
         result
     }
