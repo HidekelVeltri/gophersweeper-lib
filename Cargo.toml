@@ -2,10 +2,10 @@
 name = "gophersweeper-lib"
 author = "Hidekel Dietrich"
 description = "Minesweeper generator library, but instead of mines you must avoid Go devs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/HidekelDietrich/GopherSweeper"
+repository = "https://github.com/HidekelDietrich/gophersweeper-lib"
 
 [dependencies]
 rand = "0.8.5"
