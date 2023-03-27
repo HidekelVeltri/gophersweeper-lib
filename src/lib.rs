@@ -118,31 +118,31 @@ impl GopherSweeper {
         if x > 0 {
             result.push((x - 1, y));
         }
-
+        
         if y > 0 {
             result.push((x, y - 1));
         }
-
+        
         if x + 1 < w {
             result.push((x + 1, y));
         }
-
+        
         if y + 1 < h {
             result.push((x, y + 1));
         }
-
+        
         if x > 0 && y > 0 {
             result.push((x - 1, y - 1));
         }
-
+        
         if x > 0 && y + 1 < h {
             result.push((x - 1, y + 1));
         }
-
+        
         if x + 1 < w && y > 0 {
             result.push((x + 1, y - 1));
         }
-
+        
         if x + 1 < w && y + 1 < h {
             result.push((x + 1, y + 1));
         }
@@ -210,7 +210,7 @@ impl GameConfig {
             difficulty,
         }
     }
-    
+
     pub fn size(&self) -> (usize, usize) {
         match self.field_size {
             FieldSize::Small => SMALL,
@@ -219,7 +219,7 @@ impl GameConfig {
             FieldSize::Custom { width, height } => (width, height),
         }
     }
-    
+
     pub fn gophers(&self) -> usize {
         let (width, height) = self.size();
         
@@ -228,6 +228,7 @@ impl GameConfig {
             Difficulty::Normal => NORMAL,
             Difficulty::Hard => HARD,
             Difficulty::Custom { gophers_percentage } => gophers_percentage,
-        } * (width * height) as f32).ceil() as usize
+        } * (width * height) as f32)
+            .ceil() as usize
     }
 }
