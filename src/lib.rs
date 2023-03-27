@@ -11,8 +11,8 @@ const HARD:   f32 = 0.2;
 
 pub struct GopherSweeper {
     pub config: GameConfig,
-    remaining_cells: usize,
     field: Vec<Vec<Cell>>,
+    remaining_cells: usize,
 }
 
 impl GopherSweeper {
