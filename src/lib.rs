@@ -151,7 +151,7 @@ pub enum ToggleFlagResult {
     CellWasExposed,
 }
 
-#[derive(Default, Clone, Copy)]
+#[derive(Default)]
 pub enum FieldSize {
     #[default]
     Small,
@@ -163,7 +163,7 @@ pub enum FieldSize {
     },
 }
 
-#[derive(Default, Clone, Copy)]
+#[derive(Default)]
 pub enum Difficulty {
     #[default]
     Easy,
@@ -174,7 +174,7 @@ pub enum Difficulty {
     },
 }
 
-#[derive(Default, Clone, Copy)]
+#[derive(Default)]
 pub struct GameConfig {
     field_size: FieldSize,
     difficulty: Difficulty,
@@ -188,7 +188,7 @@ impl GameConfig {
         }
     }
     
-    pub fn size(self) -> (usize, usize) {
+    pub fn size(&self) -> (usize, usize) {
         match self.field_size {
             FieldSize::Small => SMALL,
             FieldSize::Medium => MEDIUM,
@@ -197,7 +197,7 @@ impl GameConfig {
         }
     }
     
-    pub fn gophers(self) -> usize {
+    pub fn gophers(&self) -> usize {
         let (width, height) = self.size();
         
         (match self.difficulty {
