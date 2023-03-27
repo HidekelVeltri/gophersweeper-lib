@@ -9,14 +9,6 @@ const EASY:   f32 = 0.1;
 const NORMAL: f32 = 0.15;
 const HARD:   f32 = 0.2;
 
-#[derive(Default)]
-pub struct Cell {
-    pub is_exposed: bool,
-    pub is_flagged: bool,
-    pub has_gopher: bool,
-    pub surrounding_gophers: u8,
-}
-
 pub struct GopherSweeper {
     pub config: GameConfig,
     remaining_cells: usize,
@@ -158,6 +150,14 @@ impl<'a> IntoIterator for &'a GopherSweeper {
     fn into_iter(self) -> Self::IntoIter {
         self.field.iter()
     }
+}
+
+#[derive(Default)]
+pub struct Cell {
+    pub is_exposed: bool,
+    pub is_flagged: bool,
+    pub has_gopher: bool,
+    pub surrounding_gophers: u8,
 }
 
 pub enum ExposeResult {
