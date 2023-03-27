@@ -17,14 +17,6 @@ pub struct Cell {
     pub surrounding_gophers: u8,
 }
 
-pub enum ExposeResult {
-    Exposed,
-    WasAlreadyExposed,
-    IsFlagged,
-    HasGopher,
-    Win,
-}
-
 pub struct GopherSweeper {
     pub config: GameConfig,
     remaining_cells: usize,
@@ -60,7 +52,7 @@ impl GopherSweeper {
             if planted_gophers.insert(random_coords) {
                 result.field[random_coords.1][random_coords.0].has_gopher = true;
 
-                for (x, y) in result.surrounding_cells_indexes(random_coords.0, random_coords.1) {
+                for (x, y) in result.surrounding_cells_coords(random_coords.0, random_coords.1) {
                     result.field[y][x].surrounding_gophers += 1;
                 }
             }
@@ -73,9 +65,20 @@ impl GopherSweeper {
         &self.field[y][x]
     }
 
-    pub fn toggle_flag(&mut self, x: usize, y: usize) {
+    pub fn toggle_flag(&mut self, x: usize, y: usize) -> ToggleFlagResult {
         let mut cell = &mut self.field[y][x];
+
+        if cell.is_exposed {
+            return ToggleFlagResult::CellWasExposed;
+        }
+
         cell.is_flagged = !cell.is_flagged;
+
+        if cell.is_flagged {
+            ToggleFlagResult::Enabled
+        } else {
+            ToggleFlagResult::Disabled
+        }
     }
 
     pub fn try_expose_cell(&mut self, x: usize, y: usize) -> ExposeResult {
@@ -99,7 +102,7 @@ impl GopherSweeper {
         self.remaining_cells -= 1;
 
         if cell.surrounding_gophers == 0 {
-            for (x, y) in self.surrounding_cells_indexes(x, y) {
+            for (x, y) in self.surrounding_cells_coords(x, y) {
                 if !self.field[y][x].is_exposed {
                     self.expose_recursively(x, y);
                 }
@@ -107,7 +110,7 @@ impl GopherSweeper {
         }
     }
 
-    fn surrounding_cells_indexes(&self, x: usize, y: usize) -> Vec<(usize, usize)> {
+    fn surrounding_cells_coords(&self, x: usize, y: usize) -> Vec<(usize, usize)> {
         let mut result: Vec<(usize, usize)> = Vec::with_capacity(8);
 
         let (w, h) = self.config.size();
@@ -132,6 +135,20 @@ impl<'a> IntoIterator for &'a GopherSweeper {
     fn into_iter(self) -> Self::IntoIter {
         self.field.iter()
     }
+}
+
+pub enum ExposeResult {
+    Exposed,
+    WasAlreadyExposed,
+    IsFlagged,
+    HasGopher,
+    Win,
+}
+
+pub enum ToggleFlagResult {
+    Enabled,
+    Disabled,
+    CellWasExposed,
 }
 
 #[derive(Default, Clone, Copy)]
