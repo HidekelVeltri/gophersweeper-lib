@@ -57,20 +57,9 @@ impl GopherSweeper {
         &self.field[y][x]
     }
 
-    pub fn toggle_flag(&mut self, x: usize, y: usize) -> ToggleFlagResult {
+    pub fn toggle_flag(&mut self, x: usize, y: usize) {
         let mut cell = &mut self.field[y][x];
-
-        if cell.is_exposed {
-            return ToggleFlagResult::CellWasExposed;
-        }
-
         cell.is_flagged = !cell.is_flagged;
-
-        if cell.is_flagged {
-            ToggleFlagResult::Enabled
-        } else {
-            ToggleFlagResult::Disabled
-        }
     }
 
     pub fn try_expose_cell(&mut self, x: usize, y: usize) -> ExposeResult {
@@ -166,12 +155,6 @@ pub enum ExposeResult {
     IsFlagged,
     HasGopher,
     Win,
-}
-
-pub enum ToggleFlagResult {
-    Enabled,
-    Disabled,
-    CellWasExposed,
 }
 
 #[derive(Default)]
